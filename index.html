@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+<title>Kelas Online – SMPN 4 Satap Susukan</title>
+<style>
+:root{--bg:#f3f6f6;--card:#fff;--tx:#14222a;--mut:#5b6b73;--br:#dbe3e5;--pri:#0f766e;--pri2:#0b5c56;--ok:#15803d;--warn:#b45309;--bad:#b91c1c;--soft:#e6f4f2;--g:#e8eef7;--o:#fdf1e3;--s:#e6f4f2}
+@media(prefers-color-scheme:dark){:root{--bg:#0e1517;--card:#162024;--tx:#e6eef0;--mut:#93a4ab;--br:#2a3a40;--pri:#2dd4bf;--pri2:#5eead4;--ok:#4ade80;--warn:#fbbf24;--bad:#f87171;--soft:#12302d;--g:#1b2740;--o:#3a2a17;--s:#12302d}}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:860px;margin:0 auto;padding:12px 14px 80px}
+header.top{background:var(--pri);color:#fff;position:sticky;top:0;z-index:5}
+@media(prefers-color-scheme:dark){header.top{background:#0f2d2a;color:#e6eef0}}
+.top .in{max-width:860px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.top h1{font-size:16px;margin:0;line-height:1.25;flex:1;min-width:0}
+.top small{display:block;font-weight:400;opacity:.85;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top button{background:rgba(255,255,255,.18);border:0;color:inherit;border-radius:8px;padding:7px 11px;cursor:pointer}
+nav.tabs{display:flex;gap:4px;max-width:860px;margin:0 auto;padding:0 10px}
+nav.tabs button{flex:1;background:none;border:0;border-bottom:3px solid transparent;color:inherit;opacity:.8;padding:9px 4px;cursor:pointer;font-weight:600}
+nav.tabs button.on{opacity:1;border-color:#fff}
+.card{background:var(--card);border:1px solid var(--br);border-radius:12px;padding:14px;margin:10px 0}
+.card.click{cursor:pointer}.card.click:active{background:var(--soft)}
+h2{font-size:18px;margin:14px 0 6px}h3{font-size:15px;margin:0 0 4px}
+.mut{color:var(--mut);font-size:13px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.sp{flex:1}
+.chip{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;background:var(--g)}
+.chip.belum{background:var(--o);color:var(--warn)}.chip.terkumpul{background:var(--g);color:#2563eb}.chip.dinilai{background:var(--s);color:var(--ok)}.chip.late{background:#fee2e2;color:var(--bad)}
+@media(prefers-color-scheme:dark){.chip.terkumpul{color:#93c5fd}.chip.late{background:#3a1717}}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px}
+input,select,textarea{width:100%;padding:10px 12px;border:1px solid var(--br);border-radius:9px;background:var(--bg)}
+textarea{min-height:110px;resize:vertical}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:10px;padding:11px 18px;font-weight:700;cursor:pointer}
+@media(prefers-color-scheme:dark){.btn{color:#062c28}}
+.btn:disabled{opacity:.5}.btn.sec{background:var(--soft);color:var(--pri2)}.btn.bad{background:var(--bad);color:#fff}.btn.sm{padding:6px 12px;font-size:14px}.btn.full{width:100%;margin-top:14px}
+.seg{display:flex;background:var(--soft);border-radius:11px;padding:4px;gap:4px}
+.seg button{flex:1;border:0;background:none;padding:9px;border-radius:8px;font-weight:700;cursor:pointer;color:var(--mut)}
+.seg button.on{background:var(--card);color:var(--pri2);box-shadow:0 1px 3px #0002}
+.login{max-width:400px;margin:7vh auto 0}.login h1{font-size:22px;text-align:center;margin:0 0 2px}.login p{text-align:center;margin:0 0 18px}
+.err{background:#fee2e2;color:var(--bad);padding:9px 12px;border-radius:9px;margin-top:12px;font-size:14px}
+@media(prefers-color-scheme:dark){.err{background:#3a1717}}
+.pre{white-space:pre-wrap;word-break:break-word}
+.imgs{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.imgs img{max-width:100%;max-height:340px;border-radius:9px;border:1px solid var(--br)}
+.thumb{position:relative}.thumb img{height:90px}.thumb b{position:absolute;top:2px;right:2px;background:#000a;color:#fff;border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px;cursor:pointer}
+.thread{display:flex;flex-direction:column;gap:8px;margin:8px 0}
+.msg{max-width:88%;padding:8px 12px;border-radius:12px;font-size:15px;background:var(--g)}
+.msg.guru{background:var(--s)}.msg.ortu{background:var(--o)}.msg.me{align-self:flex-end}
+.msg .w{font-size:11px;font-weight:700;opacity:.75;margin-bottom:1px}
+.score{font-size:30px;font-weight:800;color:var(--ok)}
+.tblw{overflow-x:auto;border:1px solid var(--br);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:7px 10px;border-bottom:1px solid var(--br);text-align:left;white-space:nowrap}th{background:var(--soft);position:sticky;top:0}
+td.c,th.c{text-align:center}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 18px;border-radius:99px;font-size:14px;z-index:20;opacity:0;pointer-events:none;transition:.25s;max-width:90%}
+.toast.on{opacity:1}
+.back{background:none;border:0;color:var(--pri2);font-weight:700;padding:6px 0;cursor:pointer}
+.empty{text-align:center;color:var(--mut);padding:30px 10px}
+.pw{font:700 22px Consolas,monospace;letter-spacing:3px;background:var(--soft);padding:10px;border-radius:9px;text-align:center;margin:10px 0;user-select:all}
+.spin{text-align:center;padding:40px;color:var(--mut)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+<script>
+"use strict";
+/* ===== util ===== */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmt = (ms) => ms ? new Date(ms).toLocaleString("id-ID", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" }) : "–";
+const ROLE = { guru: "Guru", siswa: "Siswa", ortu: "Orang Tua" };
+const ST = { belum: "Belum dikerjakan", terkumpul: "Terkumpul", dinilai: "Dinilai" };
+let S = { role: "siswa", id: "", pass: "", name: "", kelas: "", kelasList: [], view: "login", p: {}, tab: "tugas" };
+let toastT;
+function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove("on"), 2600); }
+
+async function api(action, data = {}) {
+  let r, j;
+  try {
+    r = await fetch("/api", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...data, action, role: S.role, uid: S.id, pass: S.pass }) });
+    j = await r.json();
+  } catch { throw new Error("Tidak dapat terhubung ke server. Periksa koneksi internet."); }
+  if (!r.ok) { if (r.status === 401 && S.view !== "login") { logout(true); } throw new Error(j.error || "Gagal"); }
+  return j;
+}
+
+/* ===== navigasi ===== */
+function go(view, p = {}, push = true) {
+  S.view = view; S.p = p;
+  if (push) history.pushState({ view, p }, "");
+  window.scrollTo(0, 0);
+  render();
+}
+window.addEventListener("popstate", (e) => {
+  if (S.view === "login") return;
+  const st = e.state;
+  if (st && st.view) { S.view = st.view; S.p = st.p; } else { S.view = S.role === "guru" ? "gtugas" : "list"; S.p = {}; }
+  render();
+});
+const home = () => go(S.role === "guru" ? "gtugas" : "list", {});
+function logout(expired) {
+  localStorage.removeItem("sk_auth");
+  S = { ...S, id: "", pass: "", name: "", view: "login", p: {} };
+  render();
+  if (expired) toast("Sesi berakhir, silakan masuk lagi");
+}
+
+/* ===== kerangka ===== */
+function shell(body, tabs) {
+  const sub = S.role === "guru" ? "Guru" : S.role === "ortu" ? `Orang tua dari ${S.anak} · Kelas ${S.kelas}` : `Siswa · Kelas ${S.kelas}`;
+  return `<header class="top"><div class="in"><h1>${esc(S.role === "guru" ? "Panel Guru" : S.name)}<small>${esc(sub)}</small></h1>
+  <button onclick="logout()">Keluar</button></div>${tabs || ""}</header><div class="wrap">${body}</div>`;
+}
+const tabsHtml = (list, cur) => `<nav class="tabs">${list.map(([k, l, v]) => `<button class="${cur === k ? "on" : ""}" onclick="S.tab='${k}';go('${v}',{})">${l}</button>`).join("")}</nav>`;
+const tabsUser = (c) => tabsHtml([["tugas", "Tugas", "list"], ["nilai", "Nilai", "nilai"], ["akun", "Akun", "akun"]], c);
+const tabsGuru = (c) => tabsHtml([["tugas", "Tugas", "gtugas"], ["rekap", "Rekap Nilai", "rekap"], ["akun", "Akun", "gakun"]], c);
+const loading = () => `<div class="spin">Memuat…</div>`;
+const set = (html) => { $("#app").innerHTML = html; };
+
+function render() {
+  const v = S.view;
+  const m = { login: vLogin, list: vList, nilai: vNilai, task: vTask, akun: vAkun, gtugas: vGTugas, gform: vGForm, gtask: vGTask, gsub: vGSub, rekap: vRekap, gakun: vGAkun };
+  (m[v] || vLogin)();
+}
+
+/* ===== login ===== */
+function vLogin(err) {
+  const r = S.role;
+  set(`<div class="wrap"><div class="login">
+  <h1>Kelas Online</h1><p class="mut">SMP Negeri 4 Satap Susukan</p>
+  <div class="card">
+    <div class="seg">${["siswa", "ortu", "guru"].map((k) => `<button class="${r === k ? "on" : ""}" onclick="S.role='${k}';vLogin()">${ROLE[k]}</button>`).join("")}</div>
+    <form onsubmit="doLogin(event)" autocomplete="on">
+    ${r !== "guru" ? `<label>NIPD siswa${r === "ortu" ? " (nomor induk anak)" : ""}</label><input id="lid" inputmode="numeric" autocomplete="username" required value="${esc(S.id)}">` : ""}
+    <label>Password ${r === "ortu" ? "orang tua" : ""}</label><input id="lpw" type="password" autocomplete="current-password" required>
+    <button class="btn full" id="lbtn">Masuk</button>
+    ${err ? `<div class="err">${esc(err)}</div>` : ""}
+    </form>
+  </div>
+  <p class="mut">Password dibagikan oleh guru. ${r === "ortu" ? "Orang tua dapat melihat tugas, nilai, dan memberi komentar." : ""}</p>
+  </div></div>`);
+}
+async function doLogin(e) {
+  e.preventDefault();
+  S.id = S.role === "guru" ? "guru" : $("#lid").value.trim();
+  S.pass = $("#lpw").value;
+  $("#lbtn").disabled = true; $("#lbtn").textContent = "Memeriksa…";
+  try { await finishLogin(); } catch (x) { S.pass = ""; vLogin(x.message); }
+}
+async function finishLogin() {
+  const u = await api("login");
+  Object.assign(S, { name: u.name, anak: u.anak, kelas: u.kelas, kelasList: u.kelasList || [] });
+  localStorage.setItem("sk_auth", JSON.stringify({ role: S.role, id: S.id, pass: S.pass }));
+  S.tab = "tugas";
+  history.replaceState({ view: "x" }, "");
+  go(S.role === "guru" ? "gtugas" : "list", {}, false);
+}
+
+/* ===== gambar ===== */
+function pickImages(input, max, store, after) {
+  [...input.files].slice(0, max).forEach((f) => {
+    const img = new Image(), url = URL.createObjectURL(f);
+    img.onload = () => {
+      const k = Math.min(1, 1100 / Math.max(img.width, img.height)), c = document.createElement("canvas");
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      if (store.length >= max) { toast(`Maksimal ${max} foto`); return; }
+      store.push(c.toDataURL("image/jpeg", 0.72)); after();
+    };
+    img.onerror = () => toast("Gambar tidak dapat dibaca");
+    img.src = url;
+  });
+  input.value = "";
+}
+const imgsHtml = (arr) => arr && arr.length ? `<div class="imgs">${arr.map((s) => `<img src="${s}" alt="foto" onclick="window.open(this.src)">`).join("")}</div>` : "";
+
+/* ===== komponen bersama ===== */
+function threadHtml(th, me) {
+  if (!th || !th.length) return `<div class="mut">Belum ada komentar.</div>`;
+  return `<div class="thread">${th.map((m) => `<div class="msg ${m.f}${m.f === me ? " me" : ""}"><div class="w">${m.f === me ? "Saya" : ROLE[m.f]} · ${fmt(m.at)}</div><div class="pre">${esc(m.t)}</div></div>`).join("")}</div>`;
+}
+function linkHtml(t) { return t.link ? `<p><a href="${esc(t.link)}" target="_blank" rel="noopener noreferrer">🔗 Buka tautan materi/soal</a></p>` : ""; }
+const dueHtml = (t) => t.due ? `<span class="mut">Batas: ${fmt(t.due)}</span>` : `<span class="mut">Tanpa batas waktu</span>`;
+const kelasLbl = (k) => k === "all" ? "Semua kelas" : "Kelas " + k;
+const pct = (sc, max) => sc == null ? null : (sc / max) * 100;
+const num = (x) => Number.isInteger(x) ? x : x.toFixed(1);
+
+/* ===== siswa / ortu: daftar tugas ===== */
+async function vList() {
+  set(shell(loading(), tabsUser("tugas")));
+  try {
+    const { tasks } = await api("list"); S.tasks = tasks;
+    const body = tasks.length ? tasks.map((t) => {
+      const late = t.status === "belum" && t.due && Date.now() > t.due;
+      return `<div class="card click" onclick="go('task',{id:'${t.id}'})">
+      <div class="row"><h3 class="sp">${esc(t.judul)}</h3>
+      <span class="chip ${t.status}">${t.status === "dinilai" ? `Nilai: ${num(t.score)}/${t.max}` : ST[t.status]}</span></div>
+      <div class="row mut" style="margin-top:4px">${dueHtml(t)}${late ? `<span class="chip late">Lewat batas</span>` : ""}${t.nc ? `<span>💬 ${t.nc}</span>` : ""}</div></div>`;
+    }).join("") : `<div class="empty">Belum ada tugas.</div>`;
+    set(shell(`<h2>Daftar Tugas</h2>${body}<button class="btn sec full" onclick="vList()">↻ Muat ulang</button>`, tabsUser("tugas")));
+  } catch (e) { set(shell(`<div class="err">${esc(e.message)}</div><button class="btn full" onclick="vList()">Coba lagi</button>`, tabsUser("tugas"))); }
+}
+
+async function vNilai() {
+  set(shell(loading(), tabsUser("nilai")));
+  try {
+    const { tasks } = await api("list");
+    const g = tasks.filter((t) => t.status === "dinilai");
+    const avg = g.length ? g.reduce((a, t) => a + pct(t.score, t.max), 0) / g.length : null;
+    const body = `<div class="card"><div class="mut">Rata-rata nilai (skala 100)</div><div class="score">${avg == null ? "–" : num(Math.round(avg * 10) / 10)}</div>
+      <div class="mut">${g.length} dari ${tasks.length} tugas sudah dinilai</div></div>
+      ${tasks.map((t) => `<div class="card click" onclick="go('task',{id:'${t.id}'})"><div class="row"><div class="sp"><h3>${esc(t.judul)}</h3><span class="mut">${ST[t.status]}</span></div>
+      <b style="font-size:20px">${t.status === "dinilai" ? `${num(t.score)}<span class="mut">/${t.max}</span>` : "–"}</b></div></div>`).join("")}`;
+    set(shell(`<h2>Nilai ${S.role === "ortu" ? esc(S.anak) : "Saya"}</h2>${body}`, tabsUser("nilai")));
+  } catch (e) { set(shell(`<div class="err">${esc(e.message)}</div>`, tabsUser("nilai"))); }
+}
+
+/* ===== siswa / ortu: detail tugas ===== */
+let myImgs = [];
+async function vTask() {
+  set(shell(loading()));
+  try {
+    const d = await api("task_get", { id: S.p.id }); S.cur = d;
+    if (S.p.keep !== true) myImgs = [];
+    drawTask();
+  } catch (e) { set(shell(`<button class="back" onclick="history.back()">← Kembali</button><div class="err">${esc(e.message)}</div>`)); }
+}
+function drawTask() {
+  const { task: t, img, sub } = S.cur, s = sub || {}, isS = S.role === "siswa";
+  const done = s.score != null, late = s.submittedAt && t.due && s.submittedAt > t.due;
+  const draft = $("#ans") ? $("#ans").value : s.answer || "";
+  let ans = "";
+  if (isS && !done) {
+    ans = `<div class="card"><h3>Jawaban Saya ${s.submittedAt ? `<span class="chip terkumpul">Terkumpul ${fmt(s.submittedAt)}</span>` : ""}</h3>
+      ${late ? `<span class="chip late">Dikumpulkan terlambat</span>` : ""}
+      <label>Tulis jawaban</label><textarea id="ans" placeholder="Ketik jawaban di sini…">${esc(draft)}</textarea>
+      ${s.imgs && s.imgs.length && !myImgs.length ? `<div class="mut">Foto terkumpul sebelumnya:</div>${imgsHtml(s.imgs)}<div class="mut">Memilih foto baru akan menggantikan foto lama.</div>` : ""}
+      <div class="imgs">${myImgs.map((x, i) => `<div class="thumb"><img src="${x}"><b onclick="myImgs.splice(${i},1);keepDraw()">×</b></div>`).join("")}</div>
+      <label>Lampirkan foto pekerjaan (maks. 3)</label><input type="file" accept="image/*" multiple onchange="pickImages(this,3,myImgs,keepDraw)">
+      <button class="btn full" id="sbtn" onclick="doSubmit()">${s.submittedAt ? "Perbarui Jawaban" : "Kumpulkan Tugas"}</button>
+      <div class="mut" style="margin-top:6px">Jawaban masih dapat diubah sampai guru memberi nilai.</div></div>`;
+  } else {
+    ans = `<div class="card"><h3>Jawaban ${isS ? "Saya" : esc(S.anak)}</h3>${s.submittedAt ? `<div class="mut">Dikumpulkan ${fmt(s.submittedAt)} ${late ? `<span class="chip late">Terlambat</span>` : ""}</div><div class="pre" style="margin-top:6px">${esc(s.answer || "")}</div>${imgsHtml(s.imgs)}` : `<div class="mut">Belum mengumpulkan.</div>`}</div>`;
+  }
+  const nilai = done ? `<div class="card"><div class="mut">Nilai</div><div class="score">${num(s.score)}<span class="mut" style="font-size:16px"> / ${t.max}</span></div>
+    ${s.feedback ? `<div class="mut" style="margin-top:6px">Catatan guru:</div><div class="pre">${esc(s.feedback)}</div>` : ""}</div>` : "";
+  set(shell(`<button class="back" onclick="history.back()">← Kembali</button>
+    <div class="card"><h2 style="margin-top:0">${esc(t.judul)}</h2><div class="row">${dueHtml(t)}<span class="mut">· Nilai maks. ${t.max}</span></div>
+    <div class="pre" style="margin-top:10px">${esc(t.desc || "")}</div>${img ? imgsHtml([img]) : ""}${linkHtml(t)}</div>
+    ${nilai}${ans}
+    <div class="card"><h3>Komentar</h3><div class="mut">Dapat dilihat oleh guru, siswa, dan orang tua.</div>${threadHtml(s.thread, S.role)}
+    <textarea id="cm" style="min-height:70px" placeholder="Tulis komentar…"></textarea>
+    <button class="btn sm" style="margin-top:8px" onclick="doComment()">Kirim komentar</button></div>`));
+}
+function keepDraw() { drawTask(); }
+async function doSubmit() {
+  const b = $("#sbtn"); b.disabled = true; b.textContent = "Mengirim…";
+  const s = S.cur.sub || {};
+  try {
+    await api("submit", { taskId: S.cur.task.id, answer: $("#ans").value, imgs: myImgs.length ? myImgs : (s.imgs || []) });
+    toast("Tugas berhasil dikumpulkan ✓"); myImgs = []; vTask();
+  } catch (e) { toast(e.message); b.disabled = false; b.textContent = "Kumpulkan Tugas"; }
+}
+async function doComment() {
+  const el = $("#cm"), text = el.value.trim(); if (!text) return;
+  try {
+    const r = await api("comment", { taskId: S.cur.task.id, text, nipd: S.p.nipd });
+    S.cur.sub = S.cur.sub || {}; S.cur.sub.thread = r.thread;
+    if (S.view === "gsub") drawGSub(); else drawTask();
+    toast("Komentar terkirim");
+  } catch (e) { toast(e.message); }
+}
+
+/* ===== akun (siswa/ortu/guru) ===== */
+function akunCard() {
+  return `<div class="card"><h3>Ganti password</h3><label>Password baru (min. 6 karakter)</label><input id="np" type="text" autocomplete="off">
+  <button class="btn full" onclick="doChangePw()">Simpan password</button></div>`;
+}
+function vAkun() {
+  set(shell(`<h2>Akun</h2><div class="card"><div><b>${esc(S.role === "ortu" ? S.anak : S.name)}</b></div><div class="mut">Kelas ${esc(S.kelas)} · NIPD ${esc(S.id)} · Masuk sebagai ${ROLE[S.role]}</div></div>${akunCard()}`, tabsUser("akun")));
+}
+async function doChangePw() {
+  const np = $("#np").value;
+  try { await api("change_pw", { newpass: np }); S.pass = np; localStorage.setItem("sk_auth", JSON.stringify({ role: S.role, id: S.id, pass: S.pass })); toast("Password diganti ✓"); $("#np").value = ""; }
+  catch (e) { toast(e.message); }
+}
+
+/* ===== GURU: daftar tugas ===== */
+async function vGTugas() {
+  set(shell(loading(), tabsGuru("tugas")));
+  try {
+    const { tasks, kelasList } = await api("list"); S.tasks = tasks; S.kelasList = kelasList;
+    const body = tasks.length ? tasks.map((t) => `<div class="card click" onclick="go('gtask',{id:'${t.id}'})"><div class="row"><h3 class="sp">${esc(t.judul)}</h3><span class="chip">${kelasLbl(t.kelas)}</span></div>
+      <div class="row">${dueHtml(t)}<span class="mut">· Maks. ${t.max}</span></div></div>`).join("") : `<div class="empty">Belum ada tugas. Tekan tombol di bawah untuk membuat.</div>`;
+    set(shell(`<div class="row"><h2 class="sp">Tugas</h2><button class="btn sm" onclick="go('gform',{})">+ Buat tugas</button></div>${body}`, tabsGuru("tugas")));
+  } catch (e) { set(shell(`<div class="err">${esc(e.message)}</div>`, tabsGuru("tugas"))); }
+}
+
+let gImg = undefined;
+function vGForm() {
+  const t = S.p.id ? S.tasks.find((x) => x.id === S.p.id) : null;
+  if (S.p.fresh !== false) gImg = undefined;
+  const due = t && t.due ? new Date(t.due - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16) : "";
+  set(shell(`<button class="back" onclick="history.back()">← Kembali</button><h2 style="margin-top:0">${t ? "Ubah" : "Buat"} Tugas</h2>
+  <div class="card">
+  <label>Judul</label><input id="f_j" maxlength="120" value="${esc(t?.judul)}">
+  <label>Untuk kelas</label><select id="f_k"><option value="all">Semua kelas</option>${S.kelasList.map((k) => `<option value="${k}" ${t?.kelas === k ? "selected" : ""}>Kelas ${k}</option>`).join("")}</select>
+  <label>Instruksi / soal</label><textarea id="f_d" style="min-height:160px">${esc(t?.desc)}</textarea>
+  <label>Tautan (opsional – Google Drive, YouTube, dll.)</label><input id="f_l" type="url" placeholder="https://" value="${esc(t?.link)}">
+  <label>Foto soal (opsional)</label>${t?.hasImg && gImg === undefined ? `<div class="mut">Tugas ini sudah memiliki foto. Pilih foto baru untuk mengganti, atau <a href="#" onclick="gImg=null;vGForm_keep();return false">hapus foto</a>.</div>` : ""}
+  ${gImg ? `<div class="imgs"><div class="thumb"><img src="${gImg}"><b onclick="gImg=undefined;vGForm_keep()">×</b></div></div>` : ""}
+  <input type="file" accept="image/*" onchange="pickGImg(this)">
+  <div class="row"><div class="sp"><label>Batas pengumpulan</label><input id="f_due" type="datetime-local" value="${due}"></div>
+  <div style="width:120px"><label>Nilai maks.</label><input id="f_m" type="number" min="1" max="1000" value="${t?.max || 100}"></div></div>
+  <button class="btn full" id="fbtn" onclick="saveTask('${t?.id || ""}')">Simpan tugas</button></div>`));
+  S.p.fresh = false;
+}
+function vGForm_keep() {
+  S.p.draft = { j: $("#f_j").value, k: $("#f_k").value, d: $("#f_d").value, l: $("#f_l").value, due: $("#f_due").value, m: $("#f_m").value };
+  vGForm(); const dr = S.p.draft; $("#f_j").value = dr.j; $("#f_k").value = dr.k; $("#f_d").value = dr.d; $("#f_l").value = dr.l; $("#f_due").value = dr.due; $("#f_m").value = dr.m;
+}
+function pickGImg(inp) { const arr = []; pickImages(inp, 1, arr, () => { gImg = arr[0]; vGForm_keep(); }); }
+async function saveTask(id) {
+  const b = $("#fbtn"); b.disabled = true;
+  const due = $("#f_due").value ? new Date($("#f_due").value).getTime() : null;
+  const data = { id, judul: $("#f_j").value, kelas: $("#f_k").value, desc: $("#f_d").value, link: $("#f_l").value, due, max: $("#f_m").value };
+  if (gImg !== undefined) data.img = gImg;
+  try { await api("task_save", data); toast("Tugas disimpan ✓"); gImg = undefined; history.back(); setTimeout(() => S.view === "gtugas" && vGTugas(), 50); }
+  catch (e) { toast(e.message); b.disabled = false; }
+}
+
+/* ===== GURU: detail tugas & daftar pengumpulan ===== */
+async function vGTask() {
+  set(shell(loading(), tabsGuru("tugas")));
+  try {
+    const d = await api("subs", { id: S.p.id }); S.gt = d;
+    const t = d.task, f = S.p.f || "all";
+    const cnt = { sub: d.rows.filter((r) => r.status !== "belum").length, graded: d.rows.filter((r) => r.status === "dinilai").length };
+    const rows = d.rows.filter((r) => f === "all" || (f === "belum" ? r.status === "belum" : f === "nilai" ? r.status === "terkumpul" : r.k === f));
+    const klsF = [...new Set(d.rows.map((r) => r.k))];
+    set(shell(`<button class="back" onclick="go('gtugas',{})">← Semua tugas</button>
+    <div class="card"><h2 style="margin-top:0">${esc(t.judul)}</h2><div class="row"><span class="chip">${kelasLbl(t.kelas)}</span>${dueHtml(t)}<span class="mut">· Maks. ${t.max}</span></div>
+    <div class="pre" style="margin-top:8px">${esc(t.desc || "")}</div>${t.hasImg ? `<div class="mut">📷 Foto soal terlampir</div>` : ""}${linkHtml(t)}
+    <div class="row" style="margin-top:10px"><button class="btn sm sec" onclick="S.tasks=S.tasks||[];go('gform',{id:'${t.id}'})">Ubah</button><button class="btn sm bad" onclick="delTask('${t.id}')">Hapus</button></div></div>
+    <div class="mut">Terkumpul ${cnt.sub}/${d.rows.length} · Sudah dinilai ${cnt.graded}</div>
+    <div class="row" style="margin:8px 0"><select id="gf" style="width:auto" onchange="S.p.f=this.value;vGTask()">
+    <option value="all">Semua siswa</option><option value="belum" ${f === "belum" ? "selected" : ""}>Belum mengumpulkan</option><option value="nilai" ${f === "nilai" ? "selected" : ""}>Perlu dinilai</option>
+    ${klsF.length > 1 ? klsF.map((k) => `<option value="${k}" ${f === k ? "selected" : ""}>Kelas ${k}</option>`).join("") : ""}</select></div>
+    ${rows.map((r) => `<div class="card click" onclick="go('gsub',{id:'${t.id}',nipd:'${r.n}'})"><div class="row"><div class="sp"><b>${esc(r.nama)}</b> <span class="mut">· ${r.k}</span></div>
+      <span class="chip ${r.status}">${r.status === "dinilai" ? num(r.score) + "/" + t.max : ST[r.status]}</span></div>
+      ${r.nc ? `<div class="mut">💬 ${r.nc} komentar${r.lastFrom && r.lastFrom !== "guru" ? " · terakhir dari " + ROLE[r.lastFrom] : ""}</div>` : ""}</div>`).join("") || `<div class="empty">Tidak ada data.</div>`}`, tabsGuru("tugas")));
+  } catch (e) { set(shell(`<div class="err">${esc(e.message)}</div>`, tabsGuru("tugas"))); }
+}
+async function delTask(id) {
+  if (!confirm("Hapus tugas ini beserta semua jawaban dan nilai siswa? Tindakan ini tidak bisa dibatalkan.")) return;
+  try { await api("task_delete", { id }); toast("Tugas dihapus"); go("gtugas", {}); } catch (e) { toast(e.message); }
+}
+
+/* ===== GURU: nilai satu siswa ===== */
+async function vGSub() {
+  set(shell(loading(), tabsGuru("tugas")));
+  try {
+    const [d, tk] = await Promise.all([api("sub_get", { taskId: S.p.id, nipd: S.p.nipd }), api("task_get", { id: S.p.id })]);
+    S.cur = { task: tk.task, img: tk.img, sub: d.sub, siswa: d.siswa }; drawGSub();
+  } catch (e) { set(shell(`<button class="back" onclick="history.back()">← Kembali</button><div class="err">${esc(e.message)}</div>`, tabsGuru("tugas"))); }
+}
+function drawGSub() {
+  const { task: t, sub: s, siswa } = S.cur;
+  const late = s.submittedAt && t.due && s.submittedAt > t.due;
+  set(shell(`<button class="back" onclick="history.back()">← Kembali</button>
+  <div class="card"><h2 style="margin-top:0">${esc(siswa.nama)}</h2><div class="mut">Kelas ${siswa.k} · NIPD ${siswa.n} · ${esc(t.judul)}</div></div>
+  <div class="card"><h3>Jawaban siswa</h3>${s.submittedAt ? `<div class="mut">Dikumpulkan ${fmt(s.submittedAt)} ${late ? `<span class="chip late">Terlambat</span>` : ""}</div><div class="pre" style="margin-top:6px">${esc(s.answer || "")}</div>${imgsHtml(s.imgs)}` : `<div class="mut">Belum mengumpulkan.</div>`}</div>
+  <div class="card"><h3>Penilaian</h3><div class="row"><div style="width:140px"><label style="margin-top:0">Nilai (0–${t.max})</label><input id="sc" type="number" step="0.5" min="0" max="${t.max}" value="${s.score ?? ""}"></div></div>
+  <label>Catatan / umpan balik</label><textarea id="fb" style="min-height:80px">${esc(s.feedback || "")}</textarea>
+  <div class="row" style="margin-top:12px"><button class="btn" onclick="doGrade()">Simpan nilai</button>${s.score != null ? `<button class="btn sec" onclick="$('#sc').value='';doGrade()">Hapus nilai</button>` : ""}</div>
+  <div class="mut" style="margin-top:6px">Siswa tidak dapat mengubah jawaban setelah dinilai.</div></div>
+  <div class="card"><h3>Komentar</h3>${threadHtml(s.thread, "guru")}
+  <textarea id="cm" style="min-height:70px" placeholder="Balas / beri komentar…"></textarea><button class="btn sm" style="margin-top:8px" onclick="doComment()">Kirim komentar</button></div>`, tabsGuru("tugas")));
+}
+async function doGrade() {
+  try { await api("grade", { taskId: S.p.id, nipd: S.p.nipd, score: $("#sc").value, feedback: $("#fb").value }); toast("Nilai tersimpan ✓"); S.cur.sub = (await api("sub_get", { taskId: S.p.id, nipd: S.p.nipd })).sub; drawGSub(); }
+  catch (e) { toast(e.message); }
+}
+
+/* ===== GURU: rekap ===== */
+async function vRekap() {
+  const k = S.p.k || S.kelasList[0];
+  set(shell(`<h2>Rekap Nilai</h2><select id="rk" onchange="go('rekap',{k:this.value},false)">${S.kelasList.map((x) => `<option ${x === k ? "selected" : ""} value="${x}">Kelas ${x}</option>`).join("")}</select><div id="rb">${loading()}</div>`, tabsGuru("rekap")));
+  try {
+    const d = await api("rekap", { kelas: k }); S.rk = { d, k };
+    const avg = (r) => { const v = d.tasks.map((t) => (r.m[t.id]?.sc != null ? pct(r.m[t.id].sc, t.max) : null)).filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+    $("#rb").innerHTML = d.tasks.length ? `<div class="row" style="margin:10px 0"><span class="mut sp">Rata-rata dihitung dari tugas yang sudah dinilai (skala 100). “•” = terkumpul, belum dinilai.</span><button class="btn sm sec" onclick="exportCsv()">Unduh CSV</button></div>
+    <div class="tblw"><table><thead><tr><th>Nama</th>${d.tasks.map((t) => `<th class="c" title="${esc(t.judul)}">${esc(t.judul.slice(0, 14))}${t.judul.length > 14 ? "…" : ""}<br><span class="mut">/${t.max}</span></th>`).join("")}<th class="c">Rata-rata</th></tr></thead>
+    <tbody>${d.rows.map((r) => `<tr><td>${esc(r.nama)}</td>${d.tasks.map((t) => { const c = r.m[t.id]; return `<td class="c">${c?.sc != null ? num(c.sc) : c?.st === "terkumpul" ? "•" : "–"}</td>`; }).join("")}<td class="c"><b>${avg(r) == null ? "–" : num(Math.round(avg(r) * 10) / 10)}</b></td></tr>`).join("")}</tbody></table></div>` : `<div class="empty">Belum ada tugas untuk kelas ini.</div>`;
+  } catch (e) { $("#rb").innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+}
+function exportCsv() {
+  const { d, k } = S.rk, q = (x) => `"${String(x ?? "").replace(/"/g, '""')}"`;
+  const lines = [["NIPD", "Nama", ...d.tasks.map((t) => t.judul + " (maks " + t.max + ")"), "Rata-rata"].map(q).join(",")];
+  d.rows.forEach((r) => {
+    const v = d.tasks.map((t) => (r.m[t.id]?.sc != null ? pct(r.m[t.id].sc, t.max) : null)).filter((x) => x != null);
+    lines.push([r.n, r.nama, ...d.tasks.map((t) => r.m[t.id]?.sc ?? ""), v.length ? (v.reduce((a, b) => a + b, 0) / v.length).toFixed(1) : ""].map(q).join(","));
+  });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv" }));
+  a.download = `rekap-nilai-kelas-${k}.csv`; a.click();
+}
+
+/* ===== GURU: akun ===== */
+async function vGAkun() {
+  set(shell(`<h2>Akun</h2>${akunCard()}<h3 style="margin-top:20px">Atur ulang password siswa / orang tua</h3><input id="q" placeholder="Cari nama atau NIPD…" oninput="drawStu()"><div id="sl">${loading()}</div>`, tabsGuru("akun")));
+  try { S.stu = (await api("students")).rows; drawStu(); } catch (e) { $("#sl").innerHTML = `<div class="err">${esc(e.message)}</div>`; }
+}
+function drawStu() {
+  const q = ($("#q").value || "").toLowerCase();
+  const l = (S.stu || []).filter((s) => !q || s.nama.toLowerCase().includes(q) || s.n.includes(q)).slice(0, 30);
+  $("#sl").innerHTML = l.map((s) => `<div class="card"><div class="row"><div class="sp"><b>${esc(s.nama)}</b><div class="mut">Kelas ${s.k} · NIPD ${s.n}</div></div>
+  <button class="btn sm sec" onclick="resetPw('${s.n}','siswa')">Reset siswa</button><button class="btn sm sec" onclick="resetPw('${s.n}','ortu')">Reset ortu</button></div></div>`).join("") || `<div class="empty">Tidak ditemukan.</div>`;
+}
+async function resetPw(n, who) {
+  const s = S.stu.find((x) => x.n === n);
+  if (!confirm(`Buat password baru untuk ${who === "ortu" ? "orang tua dari " : ""}${s.nama}? Password lama tidak berlaku lagi.`)) return;
+  try { const r = await api("reset_pw", { nipd: n, who }); alert(`Password baru ${who === "ortu" ? "orang tua" : "siswa"} ${s.nama} (NIPD ${n}):\n\n${r.pass}\n\nCatat sekarang, tidak akan ditampilkan lagi.`); }
+  catch (e) { toast(e.message); }
+}
+
+/* ===== mulai ===== */
+(async function boot() {
+  const a = JSON.parse(localStorage.getItem("sk_auth") || "null");
+  if (a && a.pass) {
+    Object.assign(S, a);
+    set(`<div class="spin">Memuat…</div>`);
+    try { await finishLogin(); return; } catch (e) { if (!/terhubung/.test(e.message)) localStorage.removeItem("sk_auth"); S.pass = ""; vLogin(/terhubung/.test(e.message) ? e.message : ""); return; }
+  }
+  vLogin();
+})();
+</script>
+</body>
+</html>
